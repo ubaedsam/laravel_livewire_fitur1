@@ -1,23 +1,29 @@
 <?php
 
-use App\Http\Controllers\ChartController;
-use App\Http\Controllers\ClientController;
-use App\Http\Controllers\DaerahController;
-use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\MailController;
-use App\Http\Controllers\StudentController;
 use App\Http\Livewire\Form;
 use App\Http\Livewire\Home;
 use App\Http\Livewire\Post;
 use App\Http\Livewire\User;
-use App\Http\Livewire\Action;
-use App\Http\Livewire\Contact;
-use App\Http\Livewire\Images;
-use App\Http\Livewire\Product;
-use App\Http\Livewire\Students;
-use App\Http\Livewire\Uploads;
 use App\Http\Livewire\Users;
+use FontLib\Table\Type\name;
+use App\Http\Livewire\Action;
+use App\Http\Livewire\Images;
+use App\Http\Livewire\Contact;
+use App\Http\Livewire\Product;
+use App\Http\Livewire\Uploads;
+use App\Http\Livewire\Students;
+use App\Http\Livewire\ExportImport;
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\AddRemoveStudent;
+use App\Http\Controllers\MailController;
+use App\Http\Controllers\ChartController;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\DaerahController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Livewire\Appointment;
+use App\Http\Livewire\ListAppointments;
+use App\Http\Livewire\Select;
 
 /*
 |--------------------------------------------------------------------------
@@ -82,6 +88,9 @@ Route::get('/uploads', Uploads::class);
 // Halaman Images
 Route::get('/upload-images', Images::class);
 
+// Livewire Export, Import, Filter Data
+Route::get('/exportimport', ExportImport::class)->name('exportimport');
+
 // Export data excel dan csv
 Route::get('/export-excel',[User::class,'exportIntoExcel']);
 
@@ -96,6 +105,11 @@ Route::get('/download-pdf',[User::class,'downloadPDF']);
 Route::get('/import-form',[User::class,'importForm']);
 
 Route::post('/import',[User::class,'import'])->name('user.import');
+
+// Import data validasi excel atau csv
+Route::get('/import-appointment',[Appointment::class,'importForm']);
+
+Route::post('/importappointment',[Appointment::class,'import'])->name('appointment.import');
 
 // Cetak satu data user ke dalam pdf
 Route::get('/print_pdf/{id}',[User::class,'print_pdf']);
@@ -160,3 +174,11 @@ Route::get('/update-post',[ClientController::class, 'updatePost'])->name('posts.
 
 // Menghapus data post berdasarkan id
 Route::get('/delete-post/{id}',[ClientController::class, 'deletePost'])->name('posts.delete');
+
+// Add or Remove Multiple input field (ajax jquery)
+Route::get('/multiple', AddRemoveStudent::class);
+
+// Livewire Dynamic select drodown
+Route::get('/select', Select::class);
+
+Route::get('appointments', ListAppointments::class)->name('appointments');
